@@ -40,7 +40,7 @@ main() {
       group('span', () {
 
         test('should contain all values if iterable is empty', () {
-          var interval = new Interval.span([]);
+          var interval = new Interval<Comparable>.span([]);
           expect(interval.lower, null);
           expect(interval.upper, null);
           expect(interval.lowerClosed, isFalse);
@@ -68,7 +68,7 @@ main() {
       group('encloseAll', () {
 
         test('should contain all values if iterable is empty', () {
-          var interval = new Interval.encloseAll([]);
+          var interval = new Interval<Comparable>.encloseAll([]);
           expect(interval.lower, null);
           expect(interval.upper, null);
         });
@@ -114,7 +114,7 @@ main() {
       group('intersectAll', () {
 
         test('should return ( -∞ .. +∞ ) if iterable is empty', () {
-          var interval = new Interval.intersectAll([]);
+          var interval = new Interval<Comparable>.intersectAll([]);
           expect(interval, new Interval.all());
         });
 

@@ -6,7 +6,7 @@ library interval;
 /// If an interval [contains] two values, it also contains all values between
 /// them.  It may have an [upper] and [lower] bound, and those bounds may be
 /// open or closed.
-class Interval<T extends Comparable<T>> {
+class Interval<T extends Comparable> {
 
   /// The lower bound value if it exists, or null.
   final T lower;
@@ -340,7 +340,7 @@ class Interval<T extends Comparable<T>> {
   int get hashCode => lower.hashCode ^ upper.hashCode ^ lowerClosed.hashCode ^
       upperClosed.hashCode;
 
-  bool operator == (Interval<T> other) =>
+  bool operator == (other) =>
       other is Interval<T> &&
       lower == other.lower &&
       upper == other.upper &&
