@@ -1,7 +1,8 @@
-name: interval
-version: 0.1.0
-author: Sean Eagan <seaneagan1@gmail.com>
-description: Provdes an Interval class, a contiguous set of values.
-homepage: https://github.com/seaneagan/interval
+name: intervals
+description: Provides classes to work with intervals
+version: 0.2.0
+author: Rik Bellens <rik.bellens@appsup.be>
+homepage: https://github.com/appsup-dart/interval
+
 dev_dependencies:
   test: any
