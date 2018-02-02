@@ -431,6 +431,29 @@ main() {
 
     });
 
+    group('isBefore', () {
+      test('should be true/false when properly ordered', () {
+        expect(new Interval.atMost(4).isBefore(new Interval.atLeast(5)),isTrue);
+        expect(new Interval.atLeast(5).isAfter(new Interval.atMost(4)),isTrue);
+        expect(new Interval.atMost(4).isAfter(new Interval.atLeast(5)),isFalse);
+        expect(new Interval.atLeast(5).isBefore(new Interval.atMost(4)),isFalse);
+      });
+      test('should be false when overlapping', () {
+        expect(new Interval.atMost(5).isBefore(new Interval.atLeast(4)),isFalse);
+        expect(new Interval.atLeast(4).isAfter(new Interval.atMost(5)),isFalse);
+      });
+      test('should be false if not bounded', () {
+        expect(new Interval.atLeast(5).isBefore(new Interval.span([10,20])),isFalse);
+        expect(new Interval.span([10,20]).isBefore(new Interval.atMost(100)),isFalse);
+      });
+      test('should be true/false when touching', () {
+        expect(new Interval.closed(0, 4).isBefore(new Interval.closed(4, 5)),isFalse);
+        expect(new Interval.closed(0, 4).isBefore(new Interval.open(4, 5)),isTrue);
+        expect(new Interval.open(0, 4).isBefore(new Interval.closed(4, 5)),isTrue);
+      });
+
+    });
+
     test('should be equal iff lower, upper, lowerClosed, and upperClosed are '
          'all equal', () {
       var it = new Interval.closed(0, 1);

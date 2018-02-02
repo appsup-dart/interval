@@ -337,6 +337,18 @@ class Interval<T extends Comparable> {
     return overlapping(this, other) && overlapping(other, this);
   }
 
+  /// Returns true if all values in `this` are smaller than any value in [other].
+  bool isBefore(Interval<T> other) {
+    if (!this.upperBounded||!other.lowerBounded) return false;
+    var cmp = Comparable.compare(this.upper, other.lower);
+    if (cmp<0) return true;
+    if (cmp>1) return false;
+    return !this.upperClosed||!other.lowerClosed;
+  }
+
+  /// Returns true if all values in `this` are larger than any value in [other].
+  bool isAfter(Interval<T> other) => other.isBefore(this);
+
   @override
   int get hashCode => lower.hashCode ^ upper.hashCode ^ lowerClosed.hashCode ^
       upperClosed.hashCode;
