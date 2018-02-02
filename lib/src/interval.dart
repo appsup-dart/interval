@@ -337,9 +337,11 @@ class Interval<T extends Comparable> {
     return overlapping(this, other) && overlapping(other, this);
   }
 
+  @override
   int get hashCode => lower.hashCode ^ upper.hashCode ^ lowerClosed.hashCode ^
       upperClosed.hashCode;
 
+  @override
   bool operator == (other) =>
       other is Interval<T> &&
       lower == other.lower &&
@@ -347,6 +349,7 @@ class Interval<T extends Comparable> {
       lowerClosed == other.lowerClosed &&
       upperClosed == other.upperClosed;
 
+  @override
   String toString() {
     var open = '${lowerClosed ? '[' : '('}${lower == null ? '-∞' : lower}';
     var close = '${upper == null ? '+∞' : upper}${upperClosed? ']' : ')'}';
