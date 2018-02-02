@@ -1,7 +1,7 @@
 
 library interval.test;
 
-import 'package:intervals/interval.dart';
+import 'package:intervals/intervals.dart';
 import 'package:test/test.dart';
 
 main() {

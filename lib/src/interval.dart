@@ -1,5 +1,5 @@
 
-library interval;
+part of intervals;
 
 /// A contiguous set of values.
 ///
