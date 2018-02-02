@@ -12,3 +12,7 @@ packages/
 
 # Include when developing application packages.
 pubspec.lock
+
+.pub
+interval.iml
+.packages
