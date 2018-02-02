@@ -198,9 +198,14 @@ class Interval<T extends Comparable> {
         lowerClosed = false;
         if (upper == null) break;
       } else {
-        if (lower != null && Comparable.compare(lower, interval.lower) >= 0) {
-          lower = interval.lower;
-          lowerClosed = lowerClosed || interval.lowerClosed;
+        if (lower != null) {
+          var cmp = Comparable.compare(lower, interval.lower);
+          if (cmp==0) {
+            lowerClosed = lowerClosed || interval.lowerClosed;
+          } else if (cmp>0) {
+            lower = interval.lower;
+            lowerClosed = interval.lowerClosed;
+          }
         }
       }
       if (interval.upper == null) {
@@ -208,9 +213,14 @@ class Interval<T extends Comparable> {
         upperClosed = false;
         if (lower == null) break;
       } else {
-        if (upper != null && Comparable.compare(upper, interval.upper) <= 0) {
-          upper = interval.upper;
-          upperClosed = upperClosed || interval.upperClosed;
+        if (upper != null) {
+          var cmp = Comparable.compare(upper, interval.upper);
+          if (cmp==0) {
+            upperClosed = upperClosed || interval.upperClosed;
+          } else if (cmp<0) {
+            upper = interval.upper;
+            upperClosed = interval.upperClosed;
+          }
         }
       }
     }

@@ -107,6 +107,10 @@ main() {
               new Interval.open(0, 1)]);
           expect(interval.lowerClosed, isFalse);
           expect(interval.upperClosed, isFalse);
+          expect(new Interval.encloseAll([
+            new Interval.closed(16,17),
+            new Interval.closedOpen(17,18)
+          ]), new Interval.closedOpen(16, 18));
         });
 
       });
