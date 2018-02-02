@@ -113,9 +113,9 @@ main() {
 
       group('intersectAll', () {
 
-        test('should return null if iterable is empty', () {
+        test('should return ( -∞ .. +∞ ) if iterable is empty', () {
           var interval = new Interval.intersectAll([]);
-          expect(interval, null);
+          expect(interval, new Interval.all());
         });
 
         test('should return null when input interval do not overlap', () {
