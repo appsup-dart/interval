@@ -483,4 +483,82 @@ main() {
 
   });
 
+  group('IntervalSet', () {
+
+    var a = new IntervalSet.unionAll([
+      new Interval.closed(3,6),
+      new Interval.closed(10,13),
+      new Interval.closed(15,16),
+      new Interval.closedOpen(17,18),
+      new Interval.closed(19,24),
+      new Interval.closed(26,27),
+      new Interval.closed(28,29)
+    ]);
+
+    var b = new IntervalSet.unionAll([
+      new Interval.closed(0,4),
+      new Interval.openClosed(5,8),
+      new Interval.closedOpen(11,12),
+      new Interval.closed(14,15),
+      new Interval.closedOpen(16, 17),
+      new Interval.closed(20,21),
+      new Interval.closed(22,23),
+      new Interval.closed(25,30)
+    ]);
+
+    test('contains', () {
+      expect(a.contains(0),isFalse);
+      expect(a.contains(3),isTrue);
+      expect(a.contains(8),isFalse);
+      expect(a.contains(11),isTrue);
+      expect(a.contains(14),isFalse);
+      expect(a.contains(18),isFalse);
+    });
+    
+    test('intersects', () {
+      expect(a.intersects(b), isTrue);
+      expect(a.intersects(new IntervalSet.unionAll([
+        new Interval.closed(8,9),
+        new Interval.open(13,15)
+      ])),isFalse);
+    });
+    
+    test('intersect', () {
+      expect(a.intersect(b), new IntervalSet.unionAll([
+        new Interval.closed(3,4),
+        new Interval.openClosed(5,6),
+        new Interval.closedOpen(11,12),
+        new Interval.singleton(15),
+        new Interval.singleton(16),
+        new Interval.closed(20,21),
+        new Interval.closed(22,23),
+        new Interval.closed(26,27),
+        new Interval.closed(28,29)
+      ]));
+    });
+    
+    test('union', () {
+      expect(a.union(b), new IntervalSet.unionAll([
+        new Interval.closed(0,8),
+        new Interval.closed(10,13),
+        new Interval.closedOpen(14,18),
+        new Interval.closed(19,24),
+        new Interval.closed(25,30)
+      ]));
+    });
+    
+    test('diff', () {
+      expect(a.diff(b), new IntervalSet.unionAll([
+        new Interval.openClosed(4,5),
+        new Interval.closedOpen(10,11),
+        new Interval.closed(12,13),
+        new Interval.open(15,16),
+        new Interval.closedOpen(17,18),
+        new Interval.closedOpen(19,20),
+        new Interval.open(21,22),
+        new Interval.openClosed(23,24),
+      ]));
+
+    });
+  });
 }
