@@ -352,7 +352,7 @@ class Interval<T extends Comparable> {
     if (!this.upperBounded||!other.lowerBounded) return false;
     var cmp = Comparable.compare(this.upper, other.lower);
     if (cmp<0) return true;
-    if (cmp>1) return false;
+    if (cmp>0) return false;
     return !this.upperClosed||!other.lowerClosed;
   }
 
