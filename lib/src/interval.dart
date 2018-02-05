@@ -62,7 +62,7 @@ class Interval<T extends Comparable> extends IntervalSet<T> {
 
   /// An interval constructed from its [Bound]s.
   ///
-  /// If [lowerBound] or [upperBound] are `null`, then the interval is unbounded
+  /// If [lower] or [upper] are `null`, then the interval is unbounded
   /// in that direction.
   Interval({this.lower, this.upper, this.lowerClosed, this.upperClosed}) {
     _checkNotOpenAndEqual(_checkBoundOrder());
