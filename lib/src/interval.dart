@@ -64,8 +64,15 @@ class Interval<T extends Comparable> extends IntervalSet<T> {
   ///
   /// If [lower] or [upper] are `null`, then the interval is unbounded
   /// in that direction.
-  Interval({this.lower, this.upper, this.lowerClosed, this.upperClosed}) {
+  factory Interval({T lower, T upper, bool lowerClosed, bool upperClosed}) =>
+    new Interval._(
+      lower: lower, upper: upper, lowerClosed: lowerClosed ?? lower!=null,
+      upperClosed: upperClosed ?? upper!=null
+    );
+
+  Interval._({this.lower, this.upper, this.lowerClosed, this.upperClosed}) {
     _checkNotOpenAndEqual(_checkBoundOrder());
+    _checkBoundOrNotClosed();
   }
 
   /// `(`[lower]`..`[upper]`)`
@@ -112,6 +119,18 @@ class Interval<T extends Comparable> extends IntervalSet<T> {
   _checkNotOpenAndEqual(int compare) {
     if (compare == 0 && !lowerClosed && !upperClosed) {
       throw new ArgumentError('invalid empty open interval ( of form (v..v) )');
+    }
+  }
+
+  _checkBoundOrNotClosed() {
+    if (lowerClosed==null || upperClosed==null) {
+      throw new ArgumentError.notNull('lowerClosed and upperClosed should not be null');
+    }
+    if (lower==null && lowerClosed) {
+      throw new ArgumentError('Interval cannot contain -∞');
+    }
+    if (upper==null && upperClosed) {
+      throw new ArgumentError('Interval cannot contain +∞');
     }
   }
 
