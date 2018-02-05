@@ -291,7 +291,7 @@ class Interval<T extends Comparable> extends IntervalSet<T> {
         }
       }
     }
-    var cmp = Comparable.compare(lower, upper);
+    var cmp = lower==null||upper==null ? -1 : Comparable.compare(lower, upper);
     if (cmp>0) return null;
     if (cmp==0&&(!upperClosed||!lowerClosed)) return null;
     return new Interval<T>(
