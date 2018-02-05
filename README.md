@@ -1,28 +1,31 @@
-interval [![pub package](http://img.shields.io/pub/v/interval.svg)](https://pub.dartlang.org/packages/interval) [![Build Status](https://drone.io/github.com/seaneagan/interval/status.png)](https://drone.io/github.com/seaneagan/interval/latest)
-========
+# intervals 
 
-Provides the `Interval` class, a contiguous set of values.
+[![Build Status](https://travis-ci.org/appsup-dart/interval.svg?branch=master)](https://travis-ci.org/appsup-dart/interval)
+
+
+Provides the `Interval` and `IntervalSet` class, a (resp. piecewise) contiguous set of values.
 
 If an Interval contains two values, it also contains all values between
 them.  It may have an upper and lower bound, and those bounds may be
 open or closed.
 
-##Install
+An IntervalSet represents the union of zero or more non connected intervals.
 
-```shell
-pub global activate den # If you haven't already
-den install interval
-```
 
-##Usage
+*Note: this package is a fork and extension of the [`interval`](https://github.com/seaneagan/interval) 
+package created by Sean Eagan*
+
+## Usage
 
 ```dart
-import 'package:interval/interval.dart';
+import 'package:intervals/intervals.dart';
 
-// Date intervals
-var activeDates = new Interval<DateTime>.closed(date1, date2);
-if(activeDates.contains(new DateTime.now()) {
-  print('Item is active!');
+void isActive(DateTime date1, DateTime date2) {
+    // Date intervals
+    var activeDates = new Interval<DateTime>.closed(date1, date2);
+    if(activeDates.contains(new DateTime.now())) {
+      print('Item is active!');
+    }  
 }
 
 // View selection model
@@ -38,4 +41,9 @@ class Rating {
     }
   }
 }
+
+// IntervalSet
+var a = new Interval.closed(0,1)
+    .union(new Interval.closed(2,5))
+    .diff(new Interval.closed(3,4));
 ```
