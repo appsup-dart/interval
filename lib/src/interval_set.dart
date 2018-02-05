@@ -2,12 +2,12 @@ part of intervals;
 
 
 /// A set of none connected intervals.
-class IntervalSet<T extends Comparable> {
+abstract class IntervalSet<T extends Comparable> {
+
+  IntervalSet();
 
   /// The individual intervals in this set
-  final List<Interval<T>> intervals;
-
-  IntervalSet._(this.intervals);
+  List<Interval<T>> get intervals;
 
   /// The minimal set of intervals which [encloses] each interval in [intervals].
   ///
@@ -22,7 +22,7 @@ class IntervalSet<T extends Comparable> {
         r[r.length-1] = new Interval.encloseAll([r.last,i]);
       }
     }
-    return new IntervalSet._(r);
+    return new MultiInterval._(r);
   }
 
   /// Whether `this` contains [test].
@@ -134,4 +134,13 @@ int _upperComparator<T extends Comparable>(Interval<T> a, Interval<T> b) {
   if (a.upperClosed&&!b.upperClosed) return -1;
   if (b.upperClosed&&!a.upperClosed) return 1;
   return 0;
+}
+
+class MultiInterval<T extends Comparable> extends IntervalSet<T> {
+
+  @override
+  final List<Interval<T>> intervals;
+
+  MultiInterval._(this.intervals);
+
 }

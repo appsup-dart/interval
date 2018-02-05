@@ -6,7 +6,7 @@ part of intervals;
 /// If an interval [contains] two values, it also contains all values between
 /// them.  It may have an [upper] and [lower] bound, and those bounds may be
 /// open or closed.
-class Interval<T extends Comparable> {
+class Interval<T extends Comparable> extends IntervalSet<T> {
 
   /// The lower bound value if it exists, or null.
   final T lower;
@@ -285,7 +285,8 @@ class Interval<T extends Comparable> {
   /// Returns the intersection of `this` interval with [other].
   ///
   /// If the intervals do not intersect, `null` is returned.
-  Interval<T> intersect(Interval<T> other) => new Interval.intersectAll([this,other]);
+  @override
+  Interval<T> intersect(IntervalSet<T> other) => new Interval.intersectAll([this]..addAll(other.intervals));
 
   /// Returns minimal interval that [encloses] both `this` and [other].
   Interval<T> enclose(Interval<T> other) => new Interval.encloseAll([this,other]);
@@ -293,6 +294,7 @@ class Interval<T extends Comparable> {
 
 
   /// Whether `this` contains [test].
+  @override
   bool contains(T test) {
     if (lower != null) {
       var lowerCompare = Comparable.compare(lower, test);
@@ -333,7 +335,8 @@ class Interval<T extends Comparable> {
   }
 
   /// Whether the intersection of `this` and [other] is not empty.
-  bool intersects(Interval<T> other) => intersect(other)!=null;
+  @override
+  bool intersects(IntervalSet<T> other) => intersect(other)!=null;
 
   /// Whether the union of `this` and [other] is connected (i.e. is an
   /// [Interval]).
@@ -358,6 +361,9 @@ class Interval<T extends Comparable> {
 
   /// Returns true if all values in `this` are larger than any value in [other].
   bool isAfter(Interval<T> other) => other.isBefore(this);
+
+  @override
+  List<Interval<T>> get intervals => [this];
 
   @override
   int get hashCode => lower.hashCode ^ upper.hashCode ^ lowerClosed.hashCode ^
