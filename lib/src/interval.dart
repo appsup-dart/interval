@@ -6,7 +6,7 @@ part of intervals;
 /// If an interval [contains] two values, it also contains all values between
 /// them.  It may have an [upper] and [lower] bound, and those bounds may be
 /// open or closed.
-class Interval<T extends Comparable> extends IntervalSet<T> {
+class Interval<T extends Comparable> extends MaterializedIntervalSet<T> {
 
   /// The lower bound value if it exists, or null.
   final T lower;
@@ -301,18 +301,10 @@ class Interval<T extends Comparable> extends IntervalSet<T> {
         upperClosed: upperClosed);
   }
 
-  /// Returns the intersection of `this` interval with [other].
-  ///
-  /// If the intervals do not intersect, `null` is returned.
-  @override
-  Interval<T> intersect(IntervalSet<T> other) => new Interval.intersectAll([this]..addAll(other.intervals));
 
   /// Returns minimal interval that [encloses] both `this` and [other].
   Interval<T> enclose(Interval<T> other) => new Interval.encloseAll([this,other]);
 
-
-
-  /// Whether `this` contains [test].
   @override
   bool contains(T test) {
     if (lower != null) {
@@ -354,8 +346,9 @@ class Interval<T extends Comparable> extends IntervalSet<T> {
   }
 
   /// Whether the intersection of `this` and [other] is not empty.
-  @override
-  bool intersects(IntervalSet<T> other) => intersect(other)!=null;
+  bool intersects(Interval<T> other) {
+    return new Interval.intersectAll([this,other])!=null;
+  }
 
   /// Whether the union of `this` and [other] is connected (i.e. is an
   /// [Interval]).
